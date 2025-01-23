@@ -1,4 +1,4 @@
-@import url(../vendor/fonts.css);
+@import url(../Vendor/fonts.css);
 @import url(../Blocks/page.css);
 @import url(../Blocks/header.css);
 @import url(../Blocks/content.css);
@@ -7,3 +7,4 @@
 @import url(../Blocks/edit.css);
 @import url(../Blocks/cards.css);
 @import url(../Blocks/card.css);
+@import url(../Blocks/body.css);
