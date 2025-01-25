@@ -30,7 +30,7 @@ The gallery seen on the page was created by displaying an untitled list with the
 
 * **Hover animations**
 
-There are three hover animations with smooth transitions applied on the page: the edit profile button, the new post button, and the like button.
+There are three hover animations with smooth transitions and cursor effects applied on the page: the edit profile button, the new post button, and the like button.
 
 *Screenshots below were taken from the original Figma project breif.*
 
@@ -55,9 +55,9 @@ The page is responsive using flexable sizing measurments and media queries. The 
 
 **Link to Site Video Overview**
 
-*Will post link after initial review*
+[View the Video Overview](https://drive.google.com/file/d/11YzYCQaZwQy8TLnvG1MYOh4vG3XXH5X3/view?usp=sharing)
 
 
 **Link to Project Brief**
 
-[Link to the project brief](https://www.figma.com/design/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project%3A-Spots?node-id=2-60&t=dhx4a7QVO8K6z6pP-0)
+[Project Brief](https://www.figma.com/design/BBNm2bC3lj8QQMHlnqRsga/Sprint-3-Project%3A-Spots?node-id=2-60&t=dhx4a7QVO8K6z6pP-0)
