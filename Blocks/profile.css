@@ -130,6 +130,6 @@
 
   .profile__add-button {
     margin: 20px auto 0;
-    width: 288px;
+    width: 100%;
   }
 }
