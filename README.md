@@ -5,7 +5,7 @@
 * Intro  
 * Technologies & Techniques Utilized
 * Link to the Site
-* Link to Site Video Overview
+* Link to Video Overview
 * Link to Project Brief
   
 **Intro**
@@ -53,7 +53,7 @@ The page is responsive using flexable sizing measurments and media queries. The 
 [View the site on Github pages](https://alisam03.github.io/se_project_spots/)
 
 
-**Link to Site Video Overview**
+**Link to Video Overview**
 
 [View the Video Overview](https://drive.google.com/file/d/11YzYCQaZwQy8TLnvG1MYOh4vG3XXH5X3/view?usp=sharing)
 
