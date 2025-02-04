@@ -1,0 +1,134 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, .5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  padding: 0 12px;
+}
+
+.modal_open {
+  visibility: visible;
+}
+
+.modal__container {
+ background-color: #fff;
+ max-width: 730px;
+ width: 100%;
+ box-sizing: border-box;
+ border-radius: 8px;
+ padding: 32px 50px;
+ display: flex;
+ flex-direction: column;
+ position: relative;
+}
+
+.modal__close-button {
+ position: absolute;
+ top: 32px;
+ right: 50px;
+ background: none;
+ background-image: url(../Images/close-icon.svg);
+ height: 40px;
+ width: 40px;
+ border-style: none;
+ transition: background-image 0.3s ease-in-out;
+ cursor: pointer;
+}
+
+.modal__close-button:hover {
+  background-image: url(../Images/close-hover.svg);
+}
+
+.modal__title {
+ margin: 0 0 32px 0;
+ font-weight: 500;
+ font-size: 32px;
+ line-height: 1;
+
+}
+
+.modal__form {
+ display: flex;
+ flex-direction: column;
+}
+
+.modal__label {
+ font-size: 18px;
+ font-weight: 16px;
+ line-height: 1.1;
+ color: rgba(0, 0, 0, .7);
+ display: flex;
+ flex-direction: column;
+ margin: 0 0 32px 0;
+ gap: 8px;
+}
+
+.modal__input {
+ max-width: 630px;
+ opacity: 40%;
+ padding: 16px 12px;
+ transition: opacity 0.3s ease-in-out;
+ cursor: pointer;
+ border-radius: 8px;
+ font-family: "Poppins", Arial, Helvetica, sans-serif;
+ font-size: 20px;
+ line-height: 1;
+ font-weight: 500;
+ color: #212121;
+
+}
+
+.modal__input:hover {
+  opacity: 100%;
+}
+
+.modal__submit-button {
+ width: 162px;
+ height: 52px;
+ background-color: #212121;
+ font-family: "Poppins", Arial, Helvetica, sans-serif;
+ font-size: 16px;
+ line-height: 1;
+ color: #FCF5E5;
+ border-radius: 8px;
+ margin: 0;
+ cursor: pointer;
+ transition: opacity 0.3s ease-in-out;
+}
+
+.modal__submit-button:hover {
+ opacity: 80%;
+}
+
+@media screen and (max-width: 650px) {
+.modal__title {
+ margin: 0 0 24px 0;
+}
+.modal__close-button {
+ top: 12px;
+ right: 12px;
+}
+
+.modal__label {
+ margin: 0 0 24px 0;
+}
+
+}
+
+@media screen and (max-width: 500px) {
+.modal__submit-button {
+  width: 376px;
+  width: 100%;
+}
+
+.modal__title {
+font-size: 20px;
+}
+}
