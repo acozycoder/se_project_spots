@@ -50,7 +50,7 @@
       <div class="modal__container">
         <button type="button" class="modal__close-button"></button>
         <h2 class="modal__title">Edit Profile</h2>
-        <form name="edit-profile" class="modal__form">
+        <form name="edit-profile" class="modal__form" id="profile-form">
           <label for="modal-name" class="modal__label" >
             Name
             <input id="modal-name" type="text" placeholder="Type your name" class="modal__input"/>
@@ -68,7 +68,7 @@
       <div class="modal__container">
         <button type="button" class="modal__close-button"></button>
         <h2 class="modal__title">New Post</h2>
-        <form name="add-post" class="modal__form">
+        <form name="add-post" class="modal__form" id="post-form">
           <label for="modal-link" class="modal__label" >
             Image link
             <input id="modal-link" type="text" placeholder="Paste a link to the picture" class="modal__input"/>
@@ -82,9 +82,9 @@
       </div>
     </div>
 
-    <div class="modal modal__photo_app-size" id="photo-modal">
+    <div class="modal modal_type_preview" id="photo-modal">
       <div class="modal__photo-content">
-        <button type="button" class="modal__close-photo-button"></button>
+        <button type="button" class="modal__close-button modal__close-button_type_preview"></button>
         <img class="modal__image" src="" alt="">
         <p class="modal__caption"></p>
       </div>
