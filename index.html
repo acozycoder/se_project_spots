@@ -32,11 +32,12 @@
         <ul class="cards__list">
           <template id="card-template">
             <li class="card">
-            <img class="card__image" src="" alt="">
-            <div class="card__content">
-              <h2 class="card__title"></h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
+              <button type="button" class="card__delete-button"></button>
+              <img class="card__image" src="" alt="">
+              <div class="card__content">
+                <h2 class="card__title"></h2>
+                <button type="button" class="card__like-button"></button>
+              </div>
             </li>
           </template>
         </ul>
@@ -62,6 +63,33 @@
         </form>
       </div>
     </div>
+
+    <div class="modal" id="post-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-button"></button>
+        <h2 class="modal__title">New Post</h2>
+        <form name="add-post" class="modal__form">
+          <label for="modal-link" class="modal__label" >
+            Image link
+            <input id="modal-link" type="text" placeholder="Paste a link to the picture" class="modal__input"/>
+          </label>
+          <label for="modal-caption" class="modal__label">
+            Caption
+            <input id="modal-caption" type="text" placeholder="Type your caption" class="modal__input"/>
+          </label>
+          <button type="submit" class="modal__submit-button">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal modal__photo_app-size" id="photo-modal">
+      <div class="modal__photo-content">
+        <button type="button" class="modal__close-photo-button"></button>
+        <img class="modal__image" src="" alt="">
+        <p class="modal__caption"></p>
+      </div>
+    </div>
+
   </div>
   <script defer src="../scripts/index.js"></script>
 </body>

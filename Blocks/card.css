@@ -8,6 +8,7 @@
   border-radius: 8px;
   object-fit: cover;
   margin-bottom: 12px;
+  cursor: pointer;
 }
 
 .card__content {
@@ -41,6 +42,35 @@
   opacity: 100%;
 }
 
+.card__like-button_liked {
+  background-image: url(../images/red-heart-icon.svg);
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.card__like-button_liked:hover {
+  opacity: 40%;
+}
+
+.card__delete-button {
+  background-image: url(../images/delete-icon.svg);
+  height: 32px;
+  width: 32px;
+  border: none;
+  cursor: pointer;
+  transition: background-image 0.3s ease-in-out;
+  position: absolute;
+  border-radius: 50%;
+  margin: 10px 10px 371px 371px;
+  opacity: 60%;
+}
+
+.card__delete-button:hover {
+  background-image: url(../images/delete-hover.svg);
+  opacity: 1;
+}
+
 @media screen and (max-width: 650px) {
   .card {
     max-width: 288px;
@@ -62,5 +92,9 @@
     width: 20px;
     background-size: contain;
     background-repeat: no-repeat;
+  }
+
+  .card__delete-button {
+    margin: 10px 10px 246px 246px;
   }
 }

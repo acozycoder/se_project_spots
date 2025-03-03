@@ -11,7 +11,7 @@ const initialCards = [
 
   {
     name: "Frequent Travels",
-    link: "https://images.unsplash.com/photo-1553697388-94e804e2f0f6?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
   },
 
   {
@@ -39,6 +39,13 @@ const profileForm = profileModal.querySelector(".modal__form");
 const profileModalName = profileModal.querySelector("#modal-name");
 const profileModalDescription = profileModal.querySelector("#modal-description");
 
+const addPostButton = document.querySelector(".profile__add-button");
+
+const postModal = document.querySelector("#post-modal");
+const postForm = postModal.querySelector(".modal__form");
+const postModalLink = postModal.querySelector("#modal-link");
+const postModalCaption = postModal.querySelector("#modal-caption");
+
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 
@@ -46,40 +53,90 @@ function getCardElement(data) {
   const cardElement = cardTemplate.content.querySelector(".card").cloneNode(true);
   const cardNameElement = cardElement.querySelector(".card__title");
   const cardImageElement = cardElement.querySelector(".card__image");
+  const cardLikeButton = cardElement.querySelector(".card__like-button");
+  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
+
+  const photoModal = document.querySelector("#photo-modal");
+  const photoModalImage = photoModal.querySelector(".modal__image");
+  const photoModalCaption = photoModal.querySelector(".modal__caption");
+
+  const closePhotoButton = photoModal.querySelector(".modal__close-photo-button");
 
   cardNameElement.textContent = data.name;
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
 
-  return cardElement;
-}
+  cardLikeButton.addEventListener("click", () => {
+    cardLikeButton.classList.toggle("card__like-button_liked")
+  });
 
-function openModal() {
+  cardDeleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
+
+  cardImageElement.addEventListener("click", () => {
+    openModal(photoModal);
+    photoModalCaption.textContent = data.name;
+    photoModalImage.src = data.link;
+    photoModalImage.alt = data.name;
+  });
+
+  closePhotoButton.addEventListener("click", () => {
+    closeModal(photoModal);
+  });
+
+  return cardElement;
+};
+
+function openModal(modal) {
+  modal.classList.add("modal_open");
+};
+
+editProfileButton.addEventListener("click", () => {
+  openModal(profileModal);
   profileModalName.value = profileName.textContent;
   profileModalDescription.value = profileDescription.textContent;
-  profileModal.classList.add("modal_open");
-}
+});
 
-editProfileButton.addEventListener("click", openModal);
+addPostButton.addEventListener("click", () => {
+  openModal(postModal);
+});
 
 const closeProfileButton = document.querySelector(".modal__close-button");
+const closePostButton = postModal.querySelector(".modal__close-button");
 
-function closeModal() {
-  profileModal.classList.remove("modal_open");
+function closeModal(modal) {
+  modal.classList.remove("modal_open");
 }
 
-closeProfileButton.addEventListener("click", closeModal);
+closeProfileButton.addEventListener("click", () => {
+  closeModal(profileModal);
+});
+
+closePostButton.addEventListener("click", () => {
+  closeModal(postModal);
+});
 
 function submitProfile(evt) {
   evt.preventDefault();
   profileName.textContent = profileModalName.value;
   profileDescription.textContent = profileModalDescription.value;
-  closeModal();
+  closeModal(profileModal);
 }
 
 profileForm.addEventListener("submit", submitProfile);
 
-for (let i = 0; i < initialCards.length; i++) {
-  const cardElement = getCardElement(initialCards[i]);
+function addPost(evt) {
+  evt.preventDefault();
+  const inputValues = {name: postModalCaption.value, link: postModalLink.value};
+  const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
+  closeModal(postModal);
 }
+
+postForm.addEventListener("submit", addPost);
+
+initialCards.forEach(function (initialCards) {
+  const cardElement = getCardElement(initialCards);
+  cardsList.prepend(cardElement);
+});
