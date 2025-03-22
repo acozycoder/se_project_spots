@@ -43,6 +43,7 @@ const addPostButton = document.querySelector(".profile__add-button");
 
 const postModal = document.querySelector("#post-modal");
 const postForm = document.forms["post-form"];
+const postSubmitButton = postModal.querySelector(".modal__submit-button");
 const postModalLink = postModal.querySelector("#modal-link");
 const postModalCaption = postModal.querySelector("#modal-caption");
 
@@ -82,14 +83,18 @@ function getCardElement(data) {
   return cardElement;
 };
 
+
 function openModal(modal) {
   modal.classList.add("modal_open");
+  modal.addEventListener("click", handleClickOutside);
+  document.addEventListener("keydown", handleEscapeKey);
 };
 
 editProfileButton.addEventListener("click", () => {
   openModal(profileModal);
   profileModalName.value = profileName.textContent;
   profileModalDescription.value = profileDescription.textContent;
+  resetValidation(profileForm, [profileModalName, profileModalDescription]);
 });
 
 addPostButton.addEventListener("click", () => {
@@ -100,12 +105,28 @@ const closeButtons = document.querySelectorAll(".modal__close-button");
 
 function closeModal(modal) {
   modal.classList.remove("modal_open");
+  modal.removeEventListener("click", handleClickOutside);
+  document.removeEventListener("keydown", handleEscapeKey);
 }
 
 closeButtons.forEach((button) => {
  const popup = button.closest('.modal');
  button.addEventListener('click', () => closeModal(popup))
 });
+
+function handleEscapeKey(e) {
+  if (e.key === "Escape") {
+    const currentModal = document.querySelector(".modal_open");
+    closeModal(currentModal);
+  }
+};
+
+function handleClickOutside(e) {
+  const currentModal = document.querySelector(".modal_open");
+  currentModal.addEventListener("click", () => {
+    closeModal(currentModal);
+  });
+};
 
 function submitProfile(evt) {
   evt.preventDefault();
@@ -122,6 +143,7 @@ function addPost(evt) {
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   evt.target.reset();
+  disableButton(postSubmitButton, settings);
   closeModal(postModal);
 }
 

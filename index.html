@@ -50,15 +50,17 @@
       <div class="modal__container">
         <button type="button" class="modal__close-button"></button>
         <h2 class="modal__title">Edit Profile</h2>
-        <form name="edit-profile" class="modal__form" id="profile-form">
+        <form name="edit-profile" class="modal__form" id="profile-form" novalidate>
           <label for="modal-name" class="modal__label" >
             Name
-            <input id="modal-name" type="text" placeholder="Type your name" class="modal__input"/>
+            <input id="modal-name" type="text" placeholder="Type your name" class="modal__input" minlength="2" maxlength="40" required/>
           </label>
+          <span class="modal__error" id="modal-name-error"></span>
           <label for="modal-description" class="modal__label">
             Description
-            <input id="modal-description" type="text" placeholder="Describe yourself" class="modal__input"/>
+            <input id="modal-description" type="text" placeholder="Describe yourself" class="modal__input" minlength="2" maxlength="200" required/>
           </label>
+          <span class="modal__error" id="modal-description-error"></span>
           <button type="submit" class="modal__submit-button">Save</button>
         </form>
       </div>
@@ -68,16 +70,18 @@
       <div class="modal__container">
         <button type="button" class="modal__close-button"></button>
         <h2 class="modal__title">New Post</h2>
-        <form name="add-post" class="modal__form" id="post-form">
+        <form name="add-post" class="modal__form" id="post-form" novalidate>
           <label for="modal-link" class="modal__label" >
             Image link
-            <input id="modal-link" type="text" placeholder="Paste a link to the picture" class="modal__input"/>
+            <input id="modal-link" type="url" placeholder="Paste a link to the picture" class="modal__input"  required/>
           </label>
+          <span class="modal__error" id="modal-link-error"></span>
           <label for="modal-caption" class="modal__label">
             Caption
-            <input id="modal-caption" type="text" placeholder="Type your caption" class="modal__input"/>
+            <input id="modal-caption" type="text" placeholder="Type your caption" class="modal__input" minlength="2" maxlength="30"  required/>
           </label>
-          <button type="submit" class="modal__submit-button">Save</button>
+          <span class="modal__error" id="modal-caption-error"></span>
+          <button type="submit" class="modal__submit-button" >Save</button>
         </form>
       </div>
     </div>
@@ -91,6 +95,7 @@
     </div>
 
   </div>
+  <script defer src="../scripts/validation.js"></script>
   <script defer src="../scripts/index.js"></script>
 </body>
 </html>

@@ -47,10 +47,14 @@ The page is responsive using flexable sizing measurments and media queries. The 
 
 ![Screenshot of the mobile view](./Images/demo/spots-cell-view-min.png)
 
+
+* **Update**
+Users are able to upload their own images and change their profile name and description. All forms also go through a validation process, allowing for more accurate and functional submissions.
   
+
 **Site Link**  
   
-[View the site on Github pages](https://alisam03.github.io/se_project_spots/)
+[View the site on Github pages](https://acozycoder.github.io/se_project_spots/)
 
 
 **Link to Video Overview**
