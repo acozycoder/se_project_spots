@@ -123,9 +123,9 @@ function handleEscapeKey(e) {
 
 function handleClickOutside(e) {
   const currentModal = document.querySelector(".modal_open");
-  currentModal.addEventListener("click", () => {
+  if (e.target === currentModal) {
     closeModal(currentModal);
-  });
+  };
 };
 
 function submitProfile(evt) {
