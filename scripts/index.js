@@ -94,7 +94,7 @@ editProfileButton.addEventListener("click", () => {
   openModal(profileModal);
   profileModalName.value = profileName.textContent;
   profileModalDescription.value = profileDescription.textContent;
-  resetValidation(profileForm, [profileModalName, profileModalDescription]);
+  resetValidation(profileForm, [profileModalName, profileModalDescription], settings);
 });
 
 addPostButton.addEventListener("click", () => {
@@ -122,9 +122,8 @@ function handleEscapeKey(e) {
 };
 
 function handleClickOutside(e) {
-  const currentModal = document.querySelector(".modal_open");
-  if (e.target === currentModal) {
-    closeModal(currentModal);
+  if (e.target.classList.contains("modal")) {
+    closeModal(e.target);
   };
 };
 
@@ -149,7 +148,12 @@ function addPost(evt) {
 
 postForm.addEventListener("submit", addPost);
 
+
+function renderCard(item, method = "prepend") {
+  const cardElement = getCardElement(item);
+  cardsList[ method ](cardElement);
+};
+
 initialCards.forEach(function (initialCards) {
-  const cardElement = getCardElement(initialCards);
-  cardsList.prepend(cardElement);
+  renderCard(initialCards);
 });
