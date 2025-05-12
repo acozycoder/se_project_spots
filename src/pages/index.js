@@ -1,38 +1,43 @@
-const initialCards = [
-  {
-    name: "Home Office Goals",
-    link: "https://images.unsplash.com/photo-1457305237443-44c3d5a30b89?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
+import "./index.css";
+import { enableValidation, resetValidation, disableButton, settings } from "../scripts/validation.js";
+import Api from "../utils/Api.js";
 
-  {
-    name: "Financial Freedom",
-    link: "https://images.unsplash.com/photo-1596313398625-2c16b75031b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
+// const initialCards = [
+//   {
+//     name: "Home Office Goals",
+//     link: "https://images.unsplash.com/photo-1457305237443-44c3d5a30b89?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//   },
 
-  {
-    name: "Frequent Travels",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
-  },
+//   {
+//     name: "Financial Freedom",
+//     link: "https://images.unsplash.com/photo-1596313398625-2c16b75031b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//   },
 
-  {
-    name: "Reliable Vehicle",
-    link: "https://images.unsplash.com/photo-1497564245203-66a1216f073a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
+//   {
+//     name: "Frequent Travels",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
+//   },
 
-  {
-    name: "Home Ownership",
-    link: "https://images.unsplash.com/photo-1564078516393-cf04bd966897?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
+//   {
+//     name: "Reliable Vehicle",
+//     link: "https://images.unsplash.com/photo-1497564245203-66a1216f073a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//   },
 
-  {
-    name: "Dream Career",
-    link: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  },
-];
+//   {
+//     name: "Home Ownership",
+//     link: "https://images.unsplash.com/photo-1564078516393-cf04bd966897?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//   },
+
+//   {
+//     name: "Dream Career",
+//     link: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+//   },
+// ];
 
 const editProfileButton = document.querySelector(".profile__edit-button");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
+const profileAvatar = document.querySelector(".profile__avatar");
 
 const profileModal = document.querySelector("#edit-modal");
 const profileForm = document.forms["profile-form"];
@@ -53,6 +58,26 @@ const cardsList = document.querySelector(".cards__list");
 const photoModal = document.querySelector("#photo-modal");
 const photoModalImage = photoModal.querySelector(".modal__image");
 const photoModalCaption = photoModal.querySelector(".modal__caption");
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "dbd91921-c78f-4c03-af14-561b6abbc01c",
+    "Content-Type": "application/json"
+  }
+});
+
+
+api.getAppInfo()
+.then(([cards, userInfo]) => {
+  cards.forEach(function (initialCards) {
+  renderCard(initialCards);
+});
+  profileAvatar.src = userInfo.avatar;
+  profileName.textContent = userInfo.name;
+  profileDescription.textContent = userInfo.about;
+})
+.catch(console.error);
 
 function getCardElement(data) {
   const cardElement = cardTemplate.content.querySelector(".card").cloneNode(true);
@@ -129,21 +154,29 @@ function handleClickOutside(e) {
 
 function submitProfile(evt) {
   evt.preventDefault();
-  profileName.textContent = profileModalName.value;
-  profileDescription.textContent = profileModalDescription.value;
-  closeModal(profileModal);
+  api.editUserInfo({name: profileModalName.value, about: profileModalDescription.value})
+  .then((data) => {
+    profileName.textContent = data.name;
+    profileDescription.textContent = data.about;
+    closeModal(profileModal);
+  })
+  .catch(console.error);
 }
 
 profileForm.addEventListener("submit", submitProfile);
 
 function addPost(evt) {
   evt.preventDefault();
+  api.addNewPost({name: postModalCaption.value, link: postModalLink.value})
+  .then((data) => {
   const inputValues = {name: postModalCaption.value, link: postModalLink.value};
   const cardElement = getCardElement(inputValues);
   cardsList.prepend(cardElement);
   evt.target.reset();
   disableButton(postSubmitButton, settings);
   closeModal(postModal);
+  })
+  .catch(console.error);
 }
 
 postForm.addEventListener("submit", addPost);
@@ -154,6 +187,4 @@ function renderCard(item, method = "prepend") {
   cardsList[ method ](cardElement);
 };
 
-initialCards.forEach(function (initialCards) {
-  renderCard(initialCards);
-});
+enableValidation(settings);
