@@ -59,6 +59,9 @@ const photoModal = document.querySelector("#photo-modal");
 const photoModalImage = photoModal.querySelector(".modal__image");
 const photoModalCaption = photoModal.querySelector(".modal__caption");
 
+let selectedCard;
+let selectedCardId;
+
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -86,6 +89,11 @@ function getCardElement(data) {
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardDeleteButton = cardElement.querySelector(".card__delete-button");
 
+  const deleteModal = document.querySelector("#delete-modal");
+  const deleteForm = deleteModal.querySelector("#delete-form");
+  const cancelDeleteButton = deleteModal.querySelector(".modal__cancel-button");
+
+
   cardNameElement.textContent = data.name;
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
@@ -94,9 +102,31 @@ function getCardElement(data) {
     cardLikeButton.classList.toggle("card__like-button_liked")
   });
 
-  cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
+  cardDeleteButton.addEventListener(
+    "click",
+    (evt) => handleDeleteCard(cardElement, data._id)
+  );
+
+  function handleDeleteCard(cardElement, cardId) {
+    selectedCard = cardElement;
+    selectedCardId = cardId;
+    openModal(deleteModal);
+  }
+
+  function handleDeleteSubmit(evt) {
+    evt.preventDefault();
+  api
+  .deleteCard(selectedCardId)
+  .then(() => {
+    selectedCard.remove();
+    closeModal(deleteModal);
+  })
+  .catch(console.error);
+  };
+
+  deleteForm.addEventListener("submit", handleDeleteSubmit);
+
+  cancelDeleteButton.addEventListener("click", () => closeModal(deleteModal));
 
   cardImageElement.addEventListener("click", () => {
     openModal(photoModal);
@@ -107,6 +137,7 @@ function getCardElement(data) {
 
   return cardElement;
 };
+
 
 
 function openModal(modal) {
@@ -180,6 +211,7 @@ function addPost(evt) {
 }
 
 postForm.addEventListener("submit", addPost);
+
 
 
 function renderCard(item, method = "prepend") {
