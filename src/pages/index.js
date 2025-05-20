@@ -82,6 +82,9 @@ api.getAppInfo()
 })
 .catch(console.error);
 
+
+
+
 function getCardElement(data) {
   const cardElement = cardTemplate.content.querySelector(".card").cloneNode(true);
   const cardNameElement = cardElement.querySelector(".card__title");
@@ -93,18 +96,26 @@ function getCardElement(data) {
   const deleteForm = deleteModal.querySelector("#delete-form");
   const cancelDeleteButton = deleteModal.querySelector(".modal__cancel-button");
 
+  // if card is liked, set active class to card
 
   cardNameElement.textContent = data.name;
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
 
-  cardLikeButton.addEventListener("click", () => {
-    cardLikeButton.classList.toggle("card__like-button_liked")
-  });
+  function handleLike(evt, cardId) {
+    const isLiked = evt.target.classList.contains("card__like-button_liked");
+    api.changeLikeStatus(cardId, isLiked)
+        .then((res) => {
+            evt.target.classList.toggle("card__like-button_liked");
+        })
+        .catch(console.error);
+}
+
+  cardLikeButton.addEventListener("click", (evt) => handleLike(evt, data._id));
 
   cardDeleteButton.addEventListener(
     "click",
-    (evt) => handleDeleteCard(cardElement, data._id)
+    () => handleDeleteCard(cardElement, data._id)
   );
 
   function handleDeleteCard(cardElement, cardId) {
