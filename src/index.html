@@ -19,11 +19,14 @@
     </header>
     <main class="content">
       <section class="profile page__section">
-        <img class="profile__avatar" src="<%= require ('./Images/avatar.jpg')%>" alt="Image of Bessie Coleman">
+        <div class="profile__avatar-container">
+          <button class="profile__avatar-button" type="button"><img class="profile__edit-button-icon" src="<%= require ('./Images/whitePen.svg')%>" alt="pencil icon"></button>
+          <img class="profile__avatar" src="<%= require ('./Images/avatar.jpg')%>" alt="Image of Bessie Coleman">
+        </div>
         <div class="profile__column">
           <h1 class="profile__name">Bessie Coleman</h1>
           <p class="profile__description">Civil Aviator</p>
-          <button class="profile__edit-button" type="button"><img class="profile__edit-button-icon" src="<%= require ('./Images/pen.svg')%>" alt="plus icon">Edit Profile</button>
+          <button class="profile__edit-button" type="button"><img class="profile__edit-button-icon" src="<%= require ('./Images/pen.svg')%>" alt="pencil icon">Edit Profile</button>
         </div>
         <button class="profile__add-button" type="button"><img class="profile__add-button-icon" src="<%= require ('./Images/add-icon.svg')%>" alt="plus icon"> New Post</button>
       </section>
@@ -45,6 +48,7 @@
     <footer class="footer page__section">
       <p class="footer__text">2025 © Alicia McKinney</p>
     </footer>
+
     <div class="modal" id="edit-modal">
       <div class="modal__container">
         <button type="button" class="modal__close-button"></button>
@@ -101,7 +105,21 @@
           <button type="submit" class="modal__delete-button">Delete</button>
           <button type="button" class="modal__cancel-button">Cancel</button>
         </form>
+      </div>
+    </div>
 
+      <div class="modal" id="avatar-modal">
+      <div class="modal__container">
+        <button type="button" class="modal__close-button"></button>
+        <h2 class="modal__title">Edit profile avatar</h2>
+        <form name="edit-avatar" class="modal__form" id="avatar-form" novalidate>
+          <label for="modal-avatar" class="modal__label">
+            Profile Picture
+            <input id="modal-avatar" type="url" placeholder="Paste a link to an image" class="modal__input"  required/>
+          </label>
+          <span class="modal__error" id="modal-avatar-error"></span>
+          <button type="submit" class="modal__submit-button modal__avatar-button">Save</button>
+        </form>
       </div>
     </div>
 

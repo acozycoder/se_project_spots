@@ -1,6 +1,7 @@
 import "./index.css";
 import { enableValidation, resetValidation, disableButton, settings } from "../scripts/validation.js";
 import Api from "../utils/Api.js";
+import { setButtonText } from "../utils/helpers.js";
 
 // const initialCards = [
 //   {
@@ -37,7 +38,13 @@ import Api from "../utils/Api.js";
 const editProfileButton = document.querySelector(".profile__edit-button");
 const profileName = document.querySelector(".profile__name");
 const profileDescription = document.querySelector(".profile__description");
+
 const profileAvatar = document.querySelector(".profile__avatar");
+const editAvatarButton = document.querySelector(".profile__avatar-button");
+const avatarModal = document.querySelector("#avatar-modal");
+const avatarInput = avatarModal.querySelector("#modal-avatar");
+const submitAvatarButton = avatarModal.querySelector(".modal__avatar-button");
+const avatarForm = document.forms["avatar-form"];
 
 const profileModal = document.querySelector("#edit-modal");
 const profileForm = document.forms["profile-form"];
@@ -96,8 +103,6 @@ function getCardElement(data) {
   const deleteForm = deleteModal.querySelector("#delete-form");
   const cancelDeleteButton = deleteModal.querySelector(".modal__cancel-button");
 
-  // if card is liked, set active class to card
-
   cardNameElement.textContent = data.name;
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
@@ -126,13 +131,20 @@ function getCardElement(data) {
 
   function handleDeleteSubmit(evt) {
     evt.preventDefault();
-  api
-  .deleteCard(selectedCardId)
-  .then(() => {
-    selectedCard.remove();
-    closeModal(deleteModal);
-  })
-  .catch(console.error);
+
+    const submitButton = evt.submitter;
+    setButtonText(submitButton, true, "Delete", "Deleting...");
+
+    api
+    .deleteCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      closeModal(deleteModal);
+    })
+    .catch(console.error)
+    .finally(() => {
+    setButtonText(submitButton, true, "Delete", "Deleting...");
+    })
   };
 
   deleteForm.addEventListener("submit", handleDeleteSubmit);
@@ -196,19 +208,53 @@ function handleClickOutside(e) {
 
 function submitProfile(evt) {
   evt.preventDefault();
+
+  const submitButton = evt.submitter;
+  setButtonText(submitButton, true, "Save", "Saving...");
+
   api.editUserInfo({name: profileModalName.value, about: profileModalDescription.value})
   .then((data) => {
     profileName.textContent = data.name;
     profileDescription.textContent = data.about;
     closeModal(profileModal);
   })
-  .catch(console.error);
+  .catch(console.error)
+  .finally(() => {
+    setButtonText(submitButton, true, "Save", "Saving...");
+  });
 }
 
 profileForm.addEventListener("submit", submitProfile);
 
+editAvatarButton.addEventListener("click", () => {
+  openModal(avatarModal);
+});
+
+function handleAvatarSubmit(evt) {
+  evt.preventDefault();
+
+  const submitButton = evt.submitter;
+  setButtonText(submitButton, true, "Save", "Saving...");
+
+  api.changeUserAvatar(avatarInput.value)
+  .then((data) => {
+    avatarInput.textContent = data.avatar;
+    closeModal(avatarModal);
+  })
+  .catch(console.error)
+  .finally(() => {
+    setButtonText(submitButton, true, "Save", "Saving...");
+  });
+}
+
+avatarForm.addEventListener("submit", handleAvatarSubmit);
+
 function addPost(evt) {
   evt.preventDefault();
+
+  const submitButton = evt.submitter;
+  setButtonText(submitButton, true, "Save", "Saving...");
+
   api.addNewPost({name: postModalCaption.value, link: postModalLink.value})
   .then((data) => {
   const inputValues = {name: postModalCaption.value, link: postModalLink.value};
@@ -218,7 +264,10 @@ function addPost(evt) {
   disableButton(postSubmitButton, settings);
   closeModal(postModal);
   })
-  .catch(console.error);
+  .catch(console.error)
+  .finally(() => {
+    setButtonText(submitButton, true, "Save", "Saving...");
+  });
 }
 
 postForm.addEventListener("submit", addPost);

@@ -120,6 +120,10 @@
  opacity: 80%;
 }
 
+.modal__avatar-button {
+ background-color: #212121;
+}
+
 
 .modal__photo-content {
  position: relative;
