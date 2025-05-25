@@ -112,16 +112,16 @@
  transition: opacity 0.3s ease-in-out;
 }
 
+.modal__avatar-button {
+ background-color: #212121;
+}
+
 .modal__submit-button_disabled {
  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal__submit-button:hover {
  opacity: 80%;
-}
-
-.modal__avatar-button {
- background-color: #212121;
 }
 
 

@@ -55,6 +55,12 @@
   opacity: 40%;
 }
 
+.card__like-count {
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
 .card__delete-button {
   background-image: url(../images/delete-icon.svg);
   height: 32px;

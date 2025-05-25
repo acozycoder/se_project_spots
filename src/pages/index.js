@@ -40,7 +40,7 @@ const photoModalCaption = photoModal.querySelector(".modal__caption");
 
 
 
-
+let userId;
 let selectedCard;
 let selectedCardId;
 
@@ -55,6 +55,7 @@ const api = new Api({
 
 api.getAppInfo()
 .then(([cards, userInfo]) => {
+  userId = userInfo._id;
   cards.forEach(function (initialCards) {
   renderCard(initialCards, "append");
 });
@@ -66,10 +67,15 @@ api.getAppInfo()
 
 function handleLike(evt, cardId) {
   const isLiked = evt.target.classList.contains("card__like-button_liked");
+
   api.changeLikeStatus(cardId, isLiked)
   .then((res) => {
-    evt.target.classList.toggle("card__like-button_liked");
-    })
+    if (isLiked) {
+      evt.target.classList.remove("card__like-button_liked");
+    } else {
+      evt.target.classList.add("card__like-button_liked");
+    }
+  })
   .catch(console.error);
 }
 
@@ -111,6 +117,10 @@ function getCardElement(data) {
   cardNameElement.textContent = data.name;
   cardImageElement.src = data.link;
   cardImageElement.alt = data.name;
+
+  if (data.isLiked) {
+  cardLikeButton.classList.add("card__like-button_liked");
+  };
 
   cardLikeButton.addEventListener("click", (evt) => handleLike(evt, data._id));
 
